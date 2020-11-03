@@ -1,0 +1,14 @@
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\bin\Release\netcoreapp2.1\ConsultingSystemUniversity.deps.json
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\bin\Release\netcoreapp2.1\ConsultingSystemUniversity.runtimeconfig.json
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\bin\Release\netcoreapp2.1\ConsultingSystemUniversity.runtimeconfig.dev.json
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\bin\Release\netcoreapp2.1\ConsultingSystemUniversity.dll
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\bin\Release\netcoreapp2.1\ConsultingSystemUniversity.pdb
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\obj\Release\netcoreapp2.1\ConsultingSystemUniversity.csprojAssemblyReference.cache
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\obj\Release\netcoreapp2.1\ConsultingSystemUniversity.csproj.CoreCompileInputs.cache
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\obj\Release\netcoreapp2.1\ConsultingSystemUniversity.RazorAssemblyInfo.cache
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\obj\Release\netcoreapp2.1\ConsultingSystemUniversity.RazorAssemblyInfo.cs
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\obj\Release\netcoreapp2.1\ConsultingSystemUniversity.AssemblyInfoInputs.cache
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\obj\Release\netcoreapp2.1\ConsultingSystemUniversity.AssemblyInfo.cs
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\obj\Release\netcoreapp2.1\ConsultingSystemUniversity.RazorTargetAssemblyInfo.cache
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\obj\Release\netcoreapp2.1\ConsultingSystemUniversity.dll
+C:\Users\TuanNguyen\source\repos\ConsultingSystemUniversity\ConsultingSystemUniversity\obj\Release\netcoreapp2.1\ConsultingSystemUniversity.pdb
