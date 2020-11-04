@@ -171,7 +171,7 @@ namespace ConsultingSystemUniversity.Controllers
             var account = await _context.Accounts.FindAsync(id);
             if (account == null)
             {
-                return NotFound();
+                return NotFound(new { message = "Not found account to delete"});
             }
 
             _context.Accounts.Remove(account);

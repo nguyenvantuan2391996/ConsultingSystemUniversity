@@ -70,6 +70,7 @@ namespace ConsultingSystemUniversity.Controllers
                     phone = account.phone,
                     address = account.address,
                     status = account.status,
+                    role = account.role,
                     languageId = account.language_id
                 });
             }

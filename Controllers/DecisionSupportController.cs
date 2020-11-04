@@ -72,7 +72,7 @@ namespace ConsultingSystemUniversity.Controllers
                 .Where(major => major.majorsGroupId == inputData.majorGroupId && major.examGroup == inputData.examGroup && major.location.Contains(inputData.location) && (major.benchmarks2019 <= inputData.score || major.benchmarks2020 <= inputData.score))
                 .ToListAsync();
 
-            if (dataDss == null)
+            if (dataDss.Count == 0)
             {
                 return NotFound(new { message = "Hệ thống chưa tìm được thông tin phù hợp" });
             }
