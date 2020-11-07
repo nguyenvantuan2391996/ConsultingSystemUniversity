@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConsultingSystemUniversity.Data;
 using ConsultingSystemUniversity.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -45,7 +46,20 @@ namespace ConsultingSystemUniversity.Controllers
             }
         }
 
+        [HttpPost("getinfortoken")]
+        [EnableCors("CorPolicy")]
+        public IActionResult getInforToken([FromBody]JwtToken jwtToken)
+        {
+            var inforToken = _context.JwtTokens.Where(jwt => jwt.token == jwtToken.token && jwt.refresh_token == jwtToken.refresh_token).FirstOrDefault();
+            if (inforToken == null)
+            {
+                return BadRequest(new { message = "Invalid token" });
+            }
+            return Ok(inforToken);
+        }
+
         [HttpPost]
+        [EnableCors("CorPolicy")]
         public IActionResult Login([FromBody]Account acc)
         {
             if (!ModelState.IsValid)
@@ -71,6 +85,7 @@ namespace ConsultingSystemUniversity.Controllers
                     address = account.address,
                     status = account.status,
                     role = account.role,
+                    id = account.id,
                     languageId = account.language_id
                 });
             }
@@ -131,11 +146,13 @@ namespace ConsultingSystemUniversity.Controllers
             jwtToken.token = encodeToken;
             jwtToken.refresh_token = refreshToken;
             jwtToken.expiry = DateTime.Now.AddDays(Convert.ToDouble(_config["Jwt:LifeTimeRefreshToken"]));
+            jwtToken.role = account.role;
 
             return jwtToken;
         }
 
         [HttpPost("refreshToken")]
+        [EnableCors("CorPolicy")]
         public ActionResult refreshToken([FromBody]JwtToken jwtToken)
         {
             if (!ModelState.IsValid)
@@ -160,15 +177,16 @@ namespace ConsultingSystemUniversity.Controllers
                 return BadRequest(new { message = "Refresh token expiried" });
             }
 
-            // remove old token
-            removeToken(oldJwtToken);
-
             // generate new token and new refresh token
             Account account = new Account();
+            account.role = oldJwtToken.role;
             var newJwtToken = GenaretaJSONWebToken(account);
 
             // add new token
             addToken(newJwtToken);
+
+            // remove old token
+            removeToken(oldJwtToken);
 
             return Ok(new
             {

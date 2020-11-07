@@ -10,6 +10,7 @@ using ConsultingSystemUniversity.Models;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace ConsultingSystemUniversity.Controllers
 {
@@ -45,6 +46,7 @@ namespace ConsultingSystemUniversity.Controllers
 
         // GET: api/Account
         [HttpGet]
+        [EnableCors("CorPolicy")]
         public async Task<IActionResult> GetAccounts([FromBody] Paging paging)
         {
             if (paging.accounts == null)
@@ -90,15 +92,16 @@ namespace ConsultingSystemUniversity.Controllers
             return Ok(listAccount);
         }
 
-        [HttpGet("getbyid")]
-        public async Task<IActionResult> GetAccount([FromBody] int id)
+        [HttpPost("getbyid")]
+        [EnableCors("CorPolicy")]
+        public async Task<IActionResult> GetAccount([FromBody] Account acc)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var account = await _context.Accounts.FindAsync(id);
+            var account = await _context.Accounts.FindAsync(acc.id);
 
             if (account == null)
             {
@@ -109,6 +112,7 @@ namespace ConsultingSystemUniversity.Controllers
         }
 
         [HttpPut("{id}")]
+        [EnableCors("CorPolicy")]
         public async Task<IActionResult> PutAccount([FromRoute] int id, [FromBody] Account account)
         {
             if (!ModelState.IsValid)
@@ -144,6 +148,8 @@ namespace ConsultingSystemUniversity.Controllers
 
         // POST: api/Accounts
         [HttpPost]
+        [EnableCors("CorPolicy")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateAccount([FromBody] Account account)
         {
             if (!ModelState.IsValid)
@@ -151,16 +157,26 @@ namespace ConsultingSystemUniversity.Controllers
                 return BadRequest(ModelState);
             }
 
-            account.password = this.ComputeSha256Hash(account.password);
+            var acc = await _context.Accounts.Where(a => a.account_name == account.account_name).FirstOrDefaultAsync();
+            if (acc == null)
+            {
+                account.password = this.ComputeSha256Hash(account.password);
+                account.role = "0";
 
-            _context.Accounts.Add(account);
-            await _context.SaveChangesAsync();
+                _context.Accounts.Add(account);
+                await _context.SaveChangesAsync();
 
-            return Ok(account.id);
+                return Ok(account.id);
+            }
+            else
+            {
+                return BadRequest(new { message = "Account name is available" });
+            }
         }
 
         // DELETE: api/Accounts/5
         [HttpDelete("{id}")]
+        [EnableCors("CorPolicy")]
         public async Task<IActionResult> DeleteAccount([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -171,7 +187,7 @@ namespace ConsultingSystemUniversity.Controllers
             var account = await _context.Accounts.FindAsync(id);
             if (account == null)
             {
-                return NotFound(new { message = "Not found account to delete"});
+                return NotFound(new { message = "Not found account to delete" });
             }
 
             _context.Accounts.Remove(account);

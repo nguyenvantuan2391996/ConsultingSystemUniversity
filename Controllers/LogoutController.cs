@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ConsultingSystemUniversity.Data;
 using ConsultingSystemUniversity.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,7 @@ namespace ConsultingSystemUniversity.Controllers
         }
 
         [HttpPost]
+        [EnableCors("CorPolicy")]
         public async Task<IActionResult> singout(JwtToken jwtToken)
         {
             if (!ModelState.IsValid)

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ConsultingSystemUniversity.Data;
 using ConsultingSystemUniversity.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ namespace ConsultingSystemUniversity.Controllers
         }
 
         [HttpPost]
+        [EnableCors("CorPolicy")]
         public async Task<IActionResult> DSS([FromBody] InputData inputData)
         {
             if (inputData.location == "all")
