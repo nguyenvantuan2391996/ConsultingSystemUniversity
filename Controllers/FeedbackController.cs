@@ -51,6 +51,28 @@ namespace ConsultingSystemUniversity.Controllers
             return Ok(feedback);
         }
 
+        // Add feedback
+        [HttpPost]
+        [EnableCors("CorPolicy")]
+        public async Task<IActionResult> addFeedback([FromBody] Feedback feedback)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var acc = await _context.Accounts.FindAsync(feedback.account_id);
+            if (acc == null)
+            {
+                return BadRequest(new { message = "Send to feedback fail" });
+            }
+
+            _context.Feedbacks.Add(feedback);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Send to feedback success " });
+        }
+
         // Delete feedback
         [HttpDelete]
         [EnableCors("CorPolicy")]

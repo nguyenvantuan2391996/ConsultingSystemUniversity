@@ -45,7 +45,7 @@ namespace ConsultingSystemUniversity.Controllers
         }
 
         // GET: api/Account
-        [HttpGet]
+        [HttpPost("getaccouts")]
         [EnableCors("CorPolicy")]
         public async Task<IActionResult> GetAccounts([FromBody] Paging paging)
         {
