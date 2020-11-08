@@ -20,6 +20,7 @@ namespace ConsultingSystemUniversity.Data
             builder.Entity<University>().ToTable("university");
             builder.Entity<MajorsGroup>().ToTable("majors_group");
             builder.Entity<Majors>().ToTable("majors");
+            builder.Entity<Feedback>().ToTable("feedback");
         }
 
         public DbSet<Account> Accounts { get; set; }
@@ -28,5 +29,6 @@ namespace ConsultingSystemUniversity.Data
         public DbSet<University> Universites { get; set; }
         public DbSet<MajorsGroup> MajorsGroups { get; set; }
         public DbSet<Majors> Majors { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
     }
 }
