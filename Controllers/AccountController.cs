@@ -45,7 +45,7 @@ namespace ConsultingSystemUniversity.Controllers
         }
 
         // GET: api/Account
-        [HttpPost("getaccouts")]
+        [HttpPost("getaccounts")]
         [EnableCors("CorPolicy")]
         public async Task<IActionResult> GetAccounts([FromBody] Paging paging)
         {
@@ -111,39 +111,29 @@ namespace ConsultingSystemUniversity.Controllers
             return Ok(account);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [EnableCors("CorPolicy")]
-        public async Task<IActionResult> PutAccount([FromRoute] int id, [FromBody] Account account)
+        public async Task<IActionResult> PutAccount([FromBody] Account account)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != account.id)
+            var acc = await _context.Accounts.FindAsync(account.id);
+
+            if (acc == null)
             {
-                return BadRequest();
+                return NotFound(new { message= "Account isn't available" });
             }
 
-            _context.Entry(account).State = EntityState.Modified;
+            acc.status = account.status;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AccountExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _context.Accounts.Update(acc);
+            await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new { message = "Update Success !" });
+
         }
 
         // POST: api/Accounts
@@ -175,25 +165,31 @@ namespace ConsultingSystemUniversity.Controllers
         }
 
         // DELETE: api/Accounts/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         [EnableCors("CorPolicy")]
-        public async Task<IActionResult> DeleteAccount([FromRoute] int id)
+        public async Task<IActionResult> DeleteAccount([FromBody] Account acc)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var account = await _context.Accounts.FindAsync(id);
+            var account = await _context.Accounts.FindAsync(acc.id);
             if (account == null)
             {
                 return NotFound(new { message = "Not found account to delete" });
             }
 
+            // Delete feedback
+            var feedbacks = await _context.Feedbacks.Where(f => f.account_id == acc.id).ToListAsync();
+            _context.Feedbacks.RemoveRange(feedbacks);
+            await _context.SaveChangesAsync();
+
+            // Delete account
             _context.Accounts.Remove(account);
             await _context.SaveChangesAsync();
 
-            return Ok(account);
+            return Ok(new { message = "Delete Success"});
         }
 
         private bool AccountExists(int id)
