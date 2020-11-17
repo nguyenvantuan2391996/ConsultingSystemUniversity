@@ -74,6 +74,16 @@ namespace ConsultingSystemUniversity.Controllers
                         results = await _context.Feedbacks.FromSql(querySql.querySql).ToListAsync();
                     }
 
+                    if (querySql.querySql.ToUpper().Contains("MESSAGE"))
+                    {
+                        results = await _context.Messages.FromSql(querySql.querySql).ToListAsync();
+                    }
+
+                    if (querySql.querySql.ToUpper().Contains("SENDER_RECEIVE"))
+                    {
+                        results = await _context.SenderReceives.FromSql(querySql.querySql).ToListAsync();
+                    }
+
                     return Ok(results);
                 }
                 else

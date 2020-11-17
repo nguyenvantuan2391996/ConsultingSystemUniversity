@@ -53,7 +53,7 @@ namespace ConsultingSystemUniversity.Controllers
             var inforToken = _context.JwtTokens.Where(jwt => jwt.token == jwtToken.token && jwt.refresh_token == jwtToken.refresh_token).FirstOrDefault();
             if (inforToken == null)
             {
-                return BadRequest(new { message = "Invalid token" });
+                return NotFound(new { message = "Invalid token" });
             }
             return Ok(inforToken);
         }

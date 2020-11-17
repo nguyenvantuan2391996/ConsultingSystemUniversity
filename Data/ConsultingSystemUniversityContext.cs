@@ -21,6 +21,8 @@ namespace ConsultingSystemUniversity.Data
             builder.Entity<MajorsGroup>().ToTable("majors_group");
             builder.Entity<Majors>().ToTable("majors");
             builder.Entity<Feedback>().ToTable("feedback");
+            builder.Entity<Message>().ToTable("message");
+            builder.Entity<SenderReceive>().ToTable("sender_receive");
         }
 
         public DbSet<Account> Accounts { get; set; }
@@ -30,5 +32,7 @@ namespace ConsultingSystemUniversity.Data
         public DbSet<MajorsGroup> MajorsGroups { get; set; }
         public DbSet<Majors> Majors { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<SenderReceive> SenderReceives { get; set; }
     }
 }
