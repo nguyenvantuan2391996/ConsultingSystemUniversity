@@ -12,5 +12,6 @@ namespace ConsultingSystemUniversity.Models
         public string token { get; set; }
         public DateTime expiry { get; set; }
         public string role { get; set; }
+        public int user_id { get; set; }
     }
 }

@@ -92,6 +92,36 @@ namespace ConsultingSystemUniversity.Controllers
             return Ok(listAccount);
         }
 
+        [HttpPost("getbylistid")]
+        [EnableCors("CorPolicy")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAccountByListId([FromBody] ListIdAccount listId)
+        {
+            if (listId == null)
+            {
+                return BadRequest(new { message = "Request is invalid" });
+            }
+
+            try
+            {
+                var listAccount = await _context.Accounts
+                    .Where(acc => listId.listId.Contains(acc.id))
+                    .Select(acc => new
+                    {
+                        id = acc.id,
+                        name = acc.name,
+                        phone = acc.phone,
+                        address = acc.address
+                    }).ToListAsync();
+
+                return Ok(listAccount);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpPost("getbyid")]
         [EnableCors("CorPolicy")]
         public async Task<IActionResult> GetAccount([FromBody] Account acc)
@@ -124,7 +154,7 @@ namespace ConsultingSystemUniversity.Controllers
 
             if (acc == null)
             {
-                return NotFound(new { message= "Account isn't available" });
+                return NotFound(new { message = "Account isn't available" });
             }
 
             acc.status = account.status;
@@ -189,7 +219,7 @@ namespace ConsultingSystemUniversity.Controllers
             _context.Accounts.Remove(account);
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Delete Success"});
+            return Ok(new { message = "Delete Success" });
         }
 
         private bool AccountExists(int id)

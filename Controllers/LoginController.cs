@@ -147,6 +147,7 @@ namespace ConsultingSystemUniversity.Controllers
             jwtToken.refresh_token = refreshToken;
             jwtToken.expiry = DateTime.Now.AddDays(Convert.ToDouble(_config["Jwt:LifeTimeRefreshToken"]));
             jwtToken.role = account.role;
+            jwtToken.user_id = account.id;
 
             return jwtToken;
         }
@@ -180,6 +181,7 @@ namespace ConsultingSystemUniversity.Controllers
             // generate new token and new refresh token
             Account account = new Account();
             account.role = oldJwtToken.role;
+            account.id = oldJwtToken.user_id;
             var newJwtToken = GenaretaJSONWebToken(account);
 
             // add new token
