@@ -86,7 +86,8 @@ namespace ConsultingSystemUniversity.Controllers
                     status = account.status,
                     role = account.role,
                     id = account.id,
-                    languageId = account.language_id
+                    languageId = account.language_id,
+                    image_url = account.image_url
                 });
             }
 

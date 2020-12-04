@@ -57,7 +57,7 @@ namespace ConsultingSystemUniversity.Controllers
 
             if (paging.limit == 0 || paging.offset == 0)
             {
-                paging.limit = 10;
+                paging.limit = 100;
                 paging.offset = 0;
             }
 
@@ -74,6 +74,7 @@ namespace ConsultingSystemUniversity.Controllers
                     phone = acc.phone,
                     address = acc.address,
                     status = acc.status,
+                    image_url = acc.image_url,
                     languageId = lang.language_id,
                     languageName = lang.language_name
                 }
@@ -111,7 +112,8 @@ namespace ConsultingSystemUniversity.Controllers
                         id = acc.id,
                         name = acc.name,
                         phone = acc.phone,
-                        address = acc.address
+                        address = acc.address,
+                        image_url = acc.image_url
                     }).ToListAsync();
 
                 return Ok(listAccount);
